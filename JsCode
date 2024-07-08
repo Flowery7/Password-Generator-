@@ -1,0 +1,35 @@
+
+function generatePassword() {
+    const length = 15; // Default password length
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const digits = '0123456789';
+    const specialCharacters = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+
+    let password = [
+        randomChoice(uppercaseLetters),
+        randomChoice(lowercaseLetters),
+        randomChoice(digits),
+        randomChoice(specialCharacters)
+    ];
+
+    const allCharacters = uppercaseLetters + lowercaseLetters + digits + specialCharacters;
+    password = password.concat(Array.from({ length: length - 4 }, () => randomChoice(allCharacters)));
+
+    shuffleArray(password);
+
+    const passwordInput = document.getElementById('password');
+    passwordInput.value = password.join('');
+}
+
+function randomChoice(characters) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    return characters[randomIndex];
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
